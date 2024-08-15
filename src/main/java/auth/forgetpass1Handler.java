@@ -3,17 +3,17 @@ package auth;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/signup")
-public class SigninHandler extends HttpServlet {
+
+public class forgetpass1Handler extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
+    private UserService userService = new UserService(); 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -21,19 +21,21 @@ public class SigninHandler extends HttpServlet {
         HttpSession session = request.getSession();
 
         String emailOrUsername = request.getParameter("email");
-        String inputPassword = request.getParameter("password");
-
-        UserService userService = new UserService();
 
         try {
+           
             User user = userService.getUserByEmailOrUsername(emailOrUsername);
-            if (user != null && user.validatePassword(inputPassword)) {
-                session.setAttribute("login_state", true);
-                session.setAttribute("email", user.getEmail());
-                session.setAttribute("username", user.getUsername());
-                response.sendRedirect("Home/Home.jsp");
+
+            if (user != null) {
+        
+                String otp = userService.generateOTP();
+                System.out.println(otp);
+                session.setAttribute("OTP", otp);
+                session.setAttribute("verifiedEmail", user.getEmail());
+         
+                response.sendRedirect("forgetpass/forgetpass.jsp");
             } else {
-                response.sendRedirect("Login/Login.jsp");
+                pr.println("<script>alert('User not found. Please try again.');window.location.href='forgetpass/forgetpass.jsp';</script>");
             }
         } catch (SQLException | ClassNotFoundException e) {
             pr.println("Database connection problem: " + e.getMessage());

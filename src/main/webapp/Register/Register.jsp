@@ -19,7 +19,8 @@ if (isset($_SESSION['signup_error'])) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title></title>
+        <title>Track-Stock - Register</title>
+     <link rel="icon" type="image/x-icon" href="../src/icon.png">
         <!--Link for Icons-->
         <link
             href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css"
@@ -79,7 +80,7 @@ if (isset($_SESSION['signup_error'])) {
 
             <div>
                 <p class="login__signup">Already Have An Account
-                     <a href="../../pages/signin/signin.php"> Sign In</a>
+                     <a href="../Login/Login.jsp"> Sign In</a>
                 </p>
                 <input
                         id="checkbox"

@@ -69,4 +69,54 @@
     <servlet-name>SignUpHandler</servlet-name>
     <url-pattern>/SignUpHandler</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>forgetpass1Handler</display-name>
+    <servlet-name>forgetpass1Handler</servlet-name>
+    <servlet-class>auth.forgetpass1Handler</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>forgetpass1Handler</servlet-name>
+    <url-pattern>/forgetpass1Handler</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>logout</display-name>
+    <servlet-name>logout</servlet-name>
+    <servlet-class>auth.logout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>logout</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Otp</display-name>
+    <servlet-name>Otp</servlet-name>
+    <servlet-class>auth.Otp</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Otp</servlet-name>
+    <url-pattern>/Otp</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>updatepassword</display-name>
+    <servlet-name>updatepassword</servlet-name>
+    <servlet-class>auth.updatepassword</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>updatepassword</servlet-name>
+    <url-pattern>/updatepassword</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>session</display-name>
+    <servlet-name>session</servlet-name>
+    <servlet-class>tools.session</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>session</servlet-name>
+    <url-pattern>/session</url-pattern>
+  </servlet-mapping>
 </web-app>

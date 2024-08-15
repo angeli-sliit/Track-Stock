@@ -83,13 +83,13 @@ if (isset($_SESSION['login_error'])) {
 
         <div>
             <p class="login__signup">
-                I Don't have an Account <a href="../../pages/signup/signup.php">Sign Up</a>
+                I Don't have an Account <a href="../Register/Register.jsp">Sign Up</a>
             </p>
             <div id="alertmsg">
 
             </div>
 
-            <a href="../../pages/forgetpass/Add_email_section/add_email.php" class="login__forgot"> forgot your password ? </a>
+            <a href="../forgetpass/forgetpass.jsp" class="login__forgot"> forgot your password ? </a>
 
             <button type="submit" id="login-btn" class="login__button"><span id="login-text">Sign In</span></button>
 

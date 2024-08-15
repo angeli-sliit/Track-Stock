@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 
 public class UserService {
     public User getUserByEmailOrUsername(String emailOrUsername) throws SQLException, ClassNotFoundException {
@@ -37,4 +38,26 @@ public class UserService {
             return rowsAffected > 0;
         }
     }
+    public String generateOTP() {
+        Random random = new Random();
+        StringBuilder otp = new StringBuilder();
+
+        for (int i = 0; i < 6; i++) {
+            otp.append(random.nextInt(10));
+        }
+        return otp.toString();
+    }
+    
+    public boolean updatePassword(String email, String newPassword) throws SQLException, ClassNotFoundException {
+        String query = "UPDATE registered_user SET password=? WHERE email=?";
+        try (Connection con = DbConn.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, newPassword);
+            ps.setString(2, email);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        }
+    }
 }
+

@@ -26,4 +26,8 @@ public class User {
     public boolean validatePassword(String inputPassword) {
         return this.password.equals(inputPassword);
     }
+    public boolean validateEmail(String inputEmail) {
+        return this.email.equals(inputEmail);
+    }
+    
 }
