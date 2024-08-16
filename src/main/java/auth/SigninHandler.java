@@ -31,7 +31,13 @@ public class SigninHandler extends HttpServlet {
                 session.setAttribute("login_state", true);
                 session.setAttribute("email", user.getEmail());
                 session.setAttribute("username", user.getUsername());
-                response.sendRedirect("Home/Home.jsp");
+
+                // Check if the user is an admin
+                if (user.getEmail().endsWith("@trackstock.com") && userService.isAdmin(user.getEmail())) {
+                    response.sendRedirect("Admin/Dashboard/admin.jsp");
+                } else {
+                    response.sendRedirect("Home/Home.jsp");
+                }
             } else {
                 response.sendRedirect("Login/Login.jsp");
             }

@@ -25,6 +25,37 @@ public class UserService {
         return null;
     }
     
+ // Method to check if the credentials exist in the admin table
+    public User getAdminByEmailOrUsername(String emailOrUsername) throws SQLException, ClassNotFoundException {
+        String query = "SELECT * FROM admin WHERE email=? OR name=?";
+        try (Connection con = DbConn.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, emailOrUsername);
+            ps.setString(2, emailOrUsername);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String username = rs.getString("name");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                
+                return new User(username, email, password);
+            }
+        }
+        return null;
+    }
+    public boolean isAdmin(String email) throws SQLException, ClassNotFoundException {
+        String query = "SELECT * FROM admin WHERE email=?";
+        try (Connection con = DbConn.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            return rs.next(); // Returns true if the email exists in the admin table
+        }
+    }
+    
+    
     
     public boolean registerUser(User user) throws SQLException, ClassNotFoundException {
         String query = "INSERT INTO registered_user (username, email, password) VALUES (?, ?, ?)";

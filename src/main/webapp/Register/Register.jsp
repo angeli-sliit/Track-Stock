@@ -1,18 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<!--Error Handler-->
-<?php
-session_start();
-// Carrying errors using session
-if (isset($_SESSION['signup_error'])) {
-    $Signup_Fail = $_SESSION['signup_error'];
-    unset($_SESSION['signup_error']);
-} else {
-    $Signup_Fail = "";
-}
-?>
-
     <!DOCTYPE html>
     <html lang="en">
 
@@ -101,7 +89,7 @@ if (isset($_SESSION['signup_error'])) {
 
     <!--Background Image-->
     <main class="main">
-        <img src="../src/Background_login.jpeg" alt="image" class="main__bg"/>
+        <img src="../src/Background_login.JPG" alt="image" class="main__bg"/>
     </main>
 
     <!--script for handling errors-->

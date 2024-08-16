@@ -19,6 +19,6 @@ public class logout extends HttpServlet {
         }
 
         // Redirect to the login page or any other page after logout
-        response.sendRedirect("login.jsp"); // Adjust the path to your login page
+        response.sendRedirect("Login/Login.jsp"); // Adjust the path to your login page
     }
 }

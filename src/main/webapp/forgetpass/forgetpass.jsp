@@ -68,7 +68,7 @@
 
     <!-- Background Image -->
     <main class="main">
-        <img src="../src/Background_login.jpeg" alt="image" class="main__bg" />
+        <img src="../src/Background_login.JPG" alt="image" class="main__bg" />
     </main>
 
     <script>
