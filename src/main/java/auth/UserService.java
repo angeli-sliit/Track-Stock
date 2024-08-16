@@ -44,6 +44,7 @@ public class UserService {
         }
         return null;
     }
+    
     public boolean isAdmin(String email) throws SQLException, ClassNotFoundException {
         String query = "SELECT * FROM admin WHERE email=?";
         try (Connection con = DbConn.getConnection();
