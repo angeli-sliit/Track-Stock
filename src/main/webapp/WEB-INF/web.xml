@@ -129,4 +129,54 @@
     <servlet-name>Admin</servlet-name>
     <url-pattern>/Admin</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Del</display-name>
+    <servlet-name>Del</servlet-name>
+    <servlet-class>tools.Del</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Del</servlet-name>
+    <url-pattern>/Del</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Products</display-name>
+    <servlet-name>Products</servlet-name>
+    <servlet-class>Products.Products</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Products</servlet-name>
+    <url-pattern>/Products</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Delete</display-name>
+    <servlet-name>Delete</servlet-name>
+    <servlet-class>Product.Delete</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Delete</servlet-name>
+    <url-pattern>/Delete</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DelRec</display-name>
+    <servlet-name>DelRec</servlet-name>
+    <servlet-class>auth.DelRec</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DelRec</servlet-name>
+    <url-pattern>/DelRec</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Remove</display-name>
+    <servlet-name>Remove</servlet-name>
+    <servlet-class>auth.Remove</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Remove</servlet-name>
+    <url-pattern>/Remove</url-pattern>
+  </servlet-mapping>
 </web-app>
