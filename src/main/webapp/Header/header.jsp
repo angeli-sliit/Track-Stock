@@ -362,7 +362,7 @@ object-fit:cover;
                   </a>
               </li>
              <li>
-                 <a href="edit_account.php" title="edit account">
+                 <a href="../account/account.jsp" title="edit account">
                      <i class="glyphicon glyphicon-cog"></i>
                      Settings
                  </a>
@@ -383,30 +383,48 @@ object-fit:cover;
               <!-- User menu -->
       <ul>
   <li>
-    <a href="home.php">
+    <a href="../Home/Home.jsp">
       <i class="glyphicon glyphicon-home"></i>
       <span>Dashboard</span>
     </a>
   </li>
-  <li>
-    <a href="#" class="submenu-toggle">
-      <i class="glyphicon glyphicon-th-list"></i>
-       <span>Sales</span>
+     <li>
+    <a href="../newsale/newsale.jsp" class="submenu-toggle">
+      <i class="glyphicon glyphicon-plus-sign"></i>
+       <span>Add New Sales</span>
       </a>
       <ul class="nav submenu" style="display: none;">
-         <li><a href="sales.php">Manage Sales</a> </li>
-         <li><a href="../Addsales/Addsales.jsp">Add Sale</a> </li>
+         
      </ul>
   </li>
+  <li>
+    <a href="../Saleslist/saleslist.jsp" class="submenu-toggle">
+      <i class="glyphicon glyphicon-th-list"></i>
+       <span>Placed Sales</span>
+      </a>
+      <ul class="nav submenu" style="display: none;">
+         
+     </ul>
+  </li>
+  <li>
+    <a href="../avalproduct/avalpro.jsp" class="submenu-toggle">
+      <i class="glyphicon glyphicon-flash"></i>
+       <span>Avaliable Products</span>
+      </a>
+      <ul class="nav submenu" style="display: none;">
+         
+     </ul>
+  </li>
+
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-signal"></i>
        <span>Sales Report</span>
       </a>
       <ul class="nav submenu" style="display: none;">
-        <li><a href="sales_report.php">Sales by dates </a></li>
-        <li><a href="monthly_sales.php">Monthly sales</a></li>
-        <li><a href="daily_sales.php">Daily sales</a> </li>
+        <li><a href="../report/Dailyreport.jsp">Sales by dates </a></li>
+        <li><a href="../report/montly_sales.jsp">Monthly sales</a></li>
+        <li><a href="../report/daily_sales.jsp">Daily sales</a> </li>
       </ul>
   </li>
 </ul>

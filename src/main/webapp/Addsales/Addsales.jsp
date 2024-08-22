@@ -1,7 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../Header/header.jsp" %>
 <%@ page import="java.sql.*,auth.DbConn" %>
+<%@page import="jakarta.servlet.http.HttpSession"%>
 
+
+
+<% HttpSession Se1 = request.getSession(); %>
+
+
+<% if(se1.getAttribute("login_state")== null){
+	response.sendRedirect("../Login/Login.jsp");
+} %>
 <%
     Connection conn = null;
     Statement stmt = null;
@@ -11,7 +20,7 @@
         // Use the DbConn class to get a connection
         conn = DbConn.getConnection();
         stmt = conn.createStatement();
-        String query = "SELECT * FROM `products`";
+        String query = "SELECT * FROM Products";
         rs = stmt.executeQuery(query);
 %>
 
@@ -34,7 +43,7 @@
                             <span>All Sales</span>
                         </strong>
                         <div class="pull-right">
-                            <a href="add_sale.jsp" class="btn btn-primary">Add sale</a>
+                            <a href="../newsale/newsale.jsp" class="btn btn-primary">Add sale</a>
                         </div>
                     </div>
                     <div class="panel-body">
@@ -61,10 +70,10 @@
                                     <td class="text-center"><%= rs.getString("ProductCategory") %></td>
                                     <td class="text-center">
                                         <div class="btn-group">
-                                            <a href="edit_sale.jsp?id=<%= rs.getString("prodId") %>" class="btn btn-warning btn-xs" title="Edit">
+                                            <a href="../updatesales/updatesales.jsp?id=<%= rs.getString("prodId") %>" class="btn btn-warning btn-xs" title="Edit">
                                                 <span class="glyphicon glyphicon-edit"></span>
                                             </a>
-                                            <a href="../Remove?table=products&idColumn=prodId&id=<%= rs.getString("prodId") %>" class="btn btn-danger btn-xs" title="Delete">
+                                            <a href="../Remove?table=products&idColumn=prodId&id=<%= rs.getString("prodId") %>&para=Addsales/Addsales.jsp" class="btn btn-danger btn-xs" title="Delete">
                                                 <span class="glyphicon glyphicon-trash"></span>
                                             </a>
                                         </div>

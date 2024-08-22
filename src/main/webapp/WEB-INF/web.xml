@@ -179,4 +179,54 @@
     <servlet-name>Remove</servlet-name>
     <url-pattern>/Remove</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>updateServe</display-name>
+    <servlet-name>updateServe</servlet-name>
+    <servlet-class>auth.updateServe</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>updateServe</servlet-name>
+    <url-pattern>/updateServe</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProductSearch</display-name>
+    <servlet-name>ProductSearch</servlet-name>
+    <servlet-class>auth.ProductSearch</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductSearch</servlet-name>
+    <url-pattern>/ProductSearch</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SalesWriter</display-name>
+    <servlet-name>SalesWriter</servlet-name>
+    <servlet-class>auth.SalesWriter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SalesWriter</servlet-name>
+    <url-pattern>/SalesWriter</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>changeServe</display-name>
+    <servlet-name>changeServe</servlet-name>
+    <servlet-class>auth.changeServe</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>changeServe</servlet-name>
+    <url-pattern>/changeServe</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>addphoto</display-name>
+    <servlet-name>addphoto</servlet-name>
+    <servlet-class>auth.addphoto</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addphoto</servlet-name>
+    <url-pattern>/addphoto</url-pattern>
+  </servlet-mapping>
 </web-app>

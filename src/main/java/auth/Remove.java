@@ -21,6 +21,7 @@ public class Remove extends HttpServlet {
         String tableName = request.getParameter("table");
         String idColumn = request.getParameter("idColumn");
         String recordId = request.getParameter("id");
+        String Return =  request.getParameter("para");
 
         // Validate parameters
         if (tableName != null && !tableName.isEmpty() &&
@@ -32,16 +33,16 @@ public class Remove extends HttpServlet {
 
                 // Redirect based on success or failure
                 if (success) {
-                    response.sendRedirect("Addsales/Addsales.jsp?message=Record+deleted+successfully");
+                    response.sendRedirect(Return + "?message=Record+deleted+successfully");
                 } else {
-                    response.sendRedirect("error.jsp?message=Record+not+found");
+                    response.sendRedirect(Return +"?message=Record+not+found");
                 }
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
-                response.sendRedirect("error.jsp?message=Error+deleting+record");
+                response.sendRedirect(Return + "message=Error+deleting+record");
             }
         } else {
-            response.sendRedirect("error.jsp?message=Invalid+request");
+            response.sendRedirect(Return + "message=Invalid+request");
         }
     }
 
