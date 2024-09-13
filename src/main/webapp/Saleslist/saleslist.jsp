@@ -83,7 +83,7 @@
                       <a href="edit_sale.jsp?id=<%= salesId %>" class="btn btn-warning btn-xs" title="Edit" data-toggle="tooltip">
                         <span class="glyphicon glyphicon-edit"></span>
                       </a>
-                      <a href="delete_sale.jsp?id=<%= salesId %>" class="btn btn-danger btn-xs" title="Delete" data-toggle="tooltip">
+                      <a href="../SalesDelete?id=<%= salesId %>&action=delete" class="btn btn-danger btn-xs" title="Delete" data-toggle="tooltip">
                         <span class="glyphicon glyphicon-trash"></span>
                       </a>
                     </div>

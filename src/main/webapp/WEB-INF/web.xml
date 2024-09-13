@@ -229,4 +229,34 @@
     <servlet-name>addphoto</servlet-name>
     <url-pattern>/addphoto</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Sales</display-name>
+    <servlet-name>Sales</servlet-name>
+    <servlet-class>auth.Sales</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Sales</servlet-name>
+    <url-pattern>/Sales</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SalesDelete</display-name>
+    <servlet-name>SalesDelete</servlet-name>
+    <servlet-class>auth.SalesDelete</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SalesDelete</servlet-name>
+    <url-pattern>/SalesDelete</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Error</display-name>
+    <servlet-name>Error</servlet-name>
+    <servlet-class>error.Error</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Error</servlet-name>
+    <url-pattern>/Error</url-pattern>
+  </servlet-mapping>
 </web-app>

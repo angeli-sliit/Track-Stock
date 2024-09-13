@@ -341,13 +341,29 @@ object-fit:cover;
     </style>
   </head>
   <body>
+
+  
+  <%
+   
+    String message = request.getParameter("message");
+
+    if (message != null && !message.isEmpty()) {
+       
+        }
+%>
+
+  
       <header id="header">
+      
       <div class="logo pull-left"><img height=40px width =40px style="object-fit:cover;transform:translateX(-30px);"src="../src/icon.png">Track-Stock</div>
       <div class="header-content">
+      
       <div class="header-date pull-left">
         <strong id="current-date-time"></strong>
       </div>
+      
       <div class="pull-right clearfix">
+      
         <ul class="info-menu list-inline list-unstyled">
           <li class="profile">
             <a href="#" data-toggle="dropdown" class="toggle" aria-expanded="false">
@@ -381,6 +397,7 @@ object-fit:cover;
     </header>
     <div class="sidebar">
               <!-- User menu -->
+              
       <ul>
   <li>
     <a href="../Home/Home.jsp">
@@ -428,10 +445,45 @@ object-fit:cover;
       </ul>
   </li>
 </ul>
-
-      
    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+
+
+<div class="page">
+<div class="container-fluid">
+     <div class="row">
+   <div class="col-md-12">
+    
+
+<div class="row">
+   <div class="col-md-12">
+   
+    <%
+    // Retrieve the message parameter from the URL
+    String msgs = request.getParameter("message");
+    String messageType = request.getParameter("type"); // 'success' or 'error'
+    String displayMessage = "";
+
+    // Check if the message parameter exists and is not empty
+    if (msgs != null && !msgs.isEmpty()) {
+        if ("success".equalsIgnoreCase(messageType)) {
+            displayMessage = "<div class='alert alert-success'><a href='#' class='close' data-dismiss='alert'>×</a>" + msgs + "</div>";
+        } else if ("error".equalsIgnoreCase(messageType)) {
+            displayMessage = "<div class='alert alert-danger'><a href='#' class='close' data-dismiss='alert'>×</a>" + msgs + "</div>";
+        } else {
+            displayMessage = "<div class='alert alert-info'><a href='#' class='close' data-dismiss='alert'>×</a>" + msgs + "</div>";
+        }
+    }
+%>
+
+<%= displayMessage %>
+</div>
+</div>
+    </div>
+    </div>
+    </div>
+</div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
   <script>

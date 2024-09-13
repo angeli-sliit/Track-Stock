@@ -78,7 +78,7 @@ $(document).ready(function() {
                     </div>
                     <div class="panel-body">
                     <%String prodId = request.getParameter("prodId"); %>
-                        <form method="post" action="../changeServe?prodId=<%=prodId%>">
+                        <form method="post" action="../SalesDelete?id=<%=prodId%>&action=add">
                         
                             <% 
                                 
