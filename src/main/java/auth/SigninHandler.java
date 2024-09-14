@@ -34,7 +34,7 @@ public class SigninHandler extends HttpServlet {
 
                 // Check if the user is an admin
                 if (user.getEmail().endsWith("@trackstock.com") && userService.isAdmin(user.getEmail())) {
-                    response.sendRedirect("Admin/Dashboard/admin.jsp");
+                    response.sendRedirect("DashboardDataFetch");
                 } else {
                     response.sendRedirect("Home/Home.jsp");
                 }

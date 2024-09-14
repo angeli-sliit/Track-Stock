@@ -343,16 +343,6 @@ object-fit:cover;
   <body>
 
   
-  <%
-   
-    String message = request.getParameter("message");
-
-    if (message != null && !message.isEmpty()) {
-       
-        }
-%>
-
-  
       <header id="header">
       
       <div class="logo pull-left"><img height=40px width =40px style="object-fit:cover;transform:translateX(-30px);"src="../src/icon.png">Track-Stock</div>
@@ -461,22 +451,23 @@ object-fit:cover;
     <%
     // Retrieve the message parameter from the URL
     String msgs = request.getParameter("message");
-    String messageType = request.getParameter("type"); // 'success' or 'error'
+    String messageType = request.getParameter("type"); 
     String displayMessage = "";
 
-    // Check if the message parameter exists and is not empty
+   
     if (msgs != null && !msgs.isEmpty()) {
         if ("success".equalsIgnoreCase(messageType)) {
-            displayMessage = "<div class='alert alert-success'><a href='#' class='close' data-dismiss='alert'>×</a>" + msgs + "</div>";
+            displayMessage = "<div id='alert-message' class='alert alert-success'><a href='#' class='close' data-dismiss='alert'>×</a>" + msgs + "</div>";
         } else if ("error".equalsIgnoreCase(messageType)) {
-            displayMessage = "<div class='alert alert-danger'><a href='#' class='close' data-dismiss='alert'>×</a>" + msgs + "</div>";
+            displayMessage = "<div id='alert-message' class='alert alert-danger'><a href='#' class='close' data-dismiss='alert'>×</a>" + msgs + "</div>";
         } else {
-            displayMessage = "<div class='alert alert-info'><a href='#' class='close' data-dismiss='alert'>×</a>" + msgs + "</div>";
+            displayMessage = "<div id='alert-message' class='alert alert-info'><a href='#' class='close' data-dismiss='alert'>×</a>" + msgs + "</div>";
         }
     }
 %>
 
 <%= displayMessage %>
+
 </div>
 </div>
     </div>
@@ -599,6 +590,20 @@ object-fit:cover;
 	setInterval(updateDateTime, 1000);
 	updateDateTime();
   </script>
+  
+  <!-- This part clear out the message after the set time -->
+  <script>
+  	const time_duration = 20000;
+  
+    var alertMessage = document.getElementById('alert-message');
+    if (alertMessage) {
+       
+        setTimeout(function() {
+          
+            alertMessage.style.display = 'none';
+        }, time_duration);
+    } 
+</script>
   
 
 

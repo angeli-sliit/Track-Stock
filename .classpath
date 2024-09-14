@@ -14,5 +14,7 @@
 	<classpathentry kind="lib" path="C:/Users/venur/git/Track-Stock/src/main/webapp/WEB-INF/lib/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/venur/git/Track-Stock/src/main/webapp/WEB-INF/lib/jakarta.servlet.jsp.jstl-2.0.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/venur/git/Track-Stock/src/main/webapp/WEB-INF/lib/jakarta.servlet.jsp.jstl-api-2.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/venur/git/Track-Stock/src/main/webapp/WEB-INF/lib/json-20240303.jar"/>
+	<classpathentry kind="lib" path="C:/Users/venur/git/Track-Stock/src/main/webapp/WEB-INF/lib/json-20210307.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

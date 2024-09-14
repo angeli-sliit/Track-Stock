@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     
-       <link rel="icon" type="image/x-icon" href="../../src/icon.png">
+       <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/src/icon.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css">
     <style>
@@ -341,7 +341,7 @@ object-fit:cover;
     </style>
   </head>
 <header id="header">
-      <div class="logo pull-left"><img height=40px width =40px style="object-fit:cover;transform:translateX(-30px);"src="../../src/icon.png">Track-Stock</div>
+      <div class="logo pull-left"><img height=40px width =40px style="object-fit:cover;transform:translateX(-30px);"src="${pageContext.request.contextPath}/src/icon.png">Track-Stock</div>
       <div class="header-content">
       <div class="header-date pull-left">
        <strong id="current-date-time"></strong>
@@ -350,7 +350,7 @@ object-fit:cover;
         <ul class="info-menu list-inline list-unstyled">
           <li class="profile">
             <a href="#" data-toggle="dropdown" class="toggle" aria-expanded="false">
-              <img src="../../src/profile.png" alt="user-image" class="img-circle img-inline">
+              <img src="${pageContext.request.contextPath}/src/profile.png" alt="user-image" class="img-circle img-inline">
               <span>Venura jayasingha <i class="caret"></i></span>
             </a>
             <ul class="dropdown-menu">
@@ -382,7 +382,7 @@ object-fit:cover;
               <!-- admin menu -->
       <ul>
   <li>
-    <a href="admin.jsp">
+    <a href="${pageContext.request.contextPath}/DashboardDataFetch">
       <i class="glyphicon glyphicon-home"></i>
       <span>Dashboard</span>
     </a>

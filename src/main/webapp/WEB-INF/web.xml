@@ -259,4 +259,24 @@
     <servlet-name>Error</servlet-name>
     <url-pattern>/Error</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Graph</display-name>
+    <servlet-name>Graph</servlet-name>
+    <servlet-class>admin.Graph</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Graph</servlet-name>
+    <url-pattern>/Graph</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DashboardDataFetch</display-name>
+    <servlet-name>DashboardDataFetch</servlet-name>
+    <servlet-class>admin.DashboardDataFetch</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DashboardDataFetch</servlet-name>
+    <url-pattern>/DashboardDataFetch</url-pattern>
+  </servlet-mapping>
 </web-app>
