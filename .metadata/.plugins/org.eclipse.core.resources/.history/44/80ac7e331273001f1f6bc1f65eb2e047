@@ -1,0 +1,47 @@
+package tools;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Enumeration;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class SessionViewer
+ */
+public class SessionViewer extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+  
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Enumeration<String> attributeNames = session.getAttributeNames();
+
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+
+		if (!attributeNames.hasMoreElements()) {
+		    out.println("<p>No session data available.</p>");
+		} else {
+		    while (attributeNames.hasMoreElements()) {
+		        String attributeName = attributeNames.nextElement();
+		        Object attributeValue = session.getAttribute(attributeName);
+
+		        out.println("<p><strong>" + attributeName + ":</strong> " + attributeValue + "</p>");
+		    }
+		}
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

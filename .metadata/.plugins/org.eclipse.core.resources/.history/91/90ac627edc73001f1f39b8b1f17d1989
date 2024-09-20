@@ -1,0 +1,51 @@
+package admin;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.sql.SQLException;
+
+import auth.User;
+import auth.UserService;
+
+public class editaccess extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.getWriter().append("Served at: ").append(request.getContextPath());
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Get parameters from the request
+        String id = request.getParameter("id");
+        String email = request.getParameter("email");
+        String access = request.getParameter("access_level"); 
+        String status = request.getParameter("status");
+
+        // Create a User object with the retrieved values
+        User user = new User(id, access, status,email);
+
+        // Use the UserService to update user access and status
+        UserService userService = new UserService();
+        boolean isUpdated = false;
+		try {
+			isUpdated = userService.updateUserAccess(user);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+        if (isUpdated) {
+            
+            response.sendRedirect("Admin/UserManagement/UserManagement.jsp");  
+        } else {
+            
+            response.sendRedirect("Admin/UserManagement/UserManagement.jsp");  
+        }
+    }
+}

@@ -1,0 +1,127 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../Dashboard/headeradmin.jsp" %>
+<%@ page import="java.sql.Connection, java.sql.PreparedStatement, java.sql.ResultSet, java.sql.SQLException" %>
+<%@ page import="auth.DbConn" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Track-Stock - Manage Products</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading clearfix">
+            <div class="pull-right">
+              <a href="add_product.jsp" class="btn btn-primary">Add New</a>
+            </div>
+          </div>
+          <div class="panel-body">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="text-center" style="width: 50px;">Product ID</th>
+                  <th>Photo</th>
+                  <th>Product Title</th>
+                  <th class="text-center" style="width: 10%;">Categories</th>
+                  <th class="text-center" style="width: 10%;">In-Stock</th>
+                  <th class="text-center" style="width: 10%;">Buying Price</th>
+                  <th class="text-center" style="width: 20%;">Added Date</th>
+                  <th class="text-center" style="width: 100px;">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% 
+                  try (Connection conn = DbConn.getConnection();
+                       PreparedStatement pstmt = conn.prepareStatement(
+                          "SELECT * FROM products AS p INNER JOIN product_category AS pc ON p.ProductCategory = pc.product_cat_id");
+                       ResultSet rs = pstmt.executeQuery()) {
+
+                    while (rs.next()) {
+                      String prodId = rs.getString("prodId");
+                      String prodName = rs.getString("ProdName");
+                      String quantity = rs.getString("Quantity");
+                      String totalDate = rs.getString("TotalDate");
+                      String category = rs.getString("product_category");
+                      String price = rs.getString("Price");
+                %>
+                <tr>
+                  <td class="text-center"><%= prodId %></td>
+                  <td>
+                    <img class="img-avatar img-circle" src="uploads/products/no_image.png" alt="">
+                  </td>
+                  <td><%= prodName %></td>
+                  <td class="text-center"><%= category %></td>
+                  <td class="text-center"><%= quantity %></td>
+                  <td class="text-center"><%= price %></td>
+                  <td class="text-center"><%= totalDate %></td>
+                  <td class="text-center">
+                    <div class="btn-group">
+                      <!-- Trigger the modal -->
+                      <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#editModal<%=prodId%>">
+                        <span class="glyphicon glyphicon-edit"></span>
+                      </button>
+                      <a href="delete_product.jsp?id=<%=prodId%>" class="btn btn-danger btn-xs" title="Delete">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Modal for Editing Product -->
+                <div class="modal fade" id="editModal<%=prodId%>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="editModalLabel">Edit Product</h4>
+                      </div>
+                      <div class="modal-body">
+                        <form method="post" action="${pageContext.request.contextPath}ProductServlet?id=<%=prodId%>&action=update">
+                          <div class="form-group">
+                            <label for="product-title">Product Title</label>
+                            <input type="text" class="form-control" name="product-title" value="<%=prodName%>">
+                          </div>
+                          <div class="form-group">
+                            <label for="product-categorie">Category</label>
+                            <input type="text" class="form-control" name="product-categorie" value="<%=category%>">
+                          </div>
+                          <div class="form-group">
+                            <label for="product-quantity">Quantity</label>
+                            <input type="number" class="form-control" name="product-quantity" value="<%=quantity%>">
+                          </div>
+                          <div class="form-group">
+                            <label for="price">Price</label>
+                            <input type="number" class="form-control" name="price" value="<%=price%>">
+                          </div>
+                          <button type="submit" class="btn btn-primary">Save changes</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Modal -->
+
+                <% 
+                    } 
+                  } catch (SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                  } 
+                %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

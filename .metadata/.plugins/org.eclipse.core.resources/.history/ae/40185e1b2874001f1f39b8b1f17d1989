@@ -1,0 +1,55 @@
+package admin;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import tools.session;  // Assuming this is your custom session utility class
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+import auth.User;
+import auth.UserService;
+
+@WebServlet("/adduserManual")
+public class adduserManual extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Retrieving form parameters
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");  // Corrected to get actual password from form
+        String access_state = "Active";
+        String access_level = request.getParameter("role");
+
+        // Create User object using the User class
+        User user = new User(username, email, password, access_state, access_level);
+        UserService userService = new UserService();
+
+        try {
+            // Check if user already exists by email or username
+            if (userService.getUserByEmailOrUsername(email) != null) {
+                session.setAttribute("state", "error");
+                session.setAttribute("message", "User Already Exists");
+                response.sendRedirect("Admin/UserManagement/Userdetails.jsp");  // Redirect to user details page
+            } else {
+                // Register the new user
+                boolean success = userService.registerUser(user);
+                if (success) {
+                    session.setAttribute("state", "success");
+                    session.setAttribute("message", "User Added Successfully");
+                    response.sendRedirect("Admin/UserManagement/Userdetails.jsp");  // Redirect on success
+                } else {
+                    response.getWriter().println("User registration failed. Please try again.");
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            // Error handling in case of DB issues
+            response.getWriter().println("Database connection problem: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+}

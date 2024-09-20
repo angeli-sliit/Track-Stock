@@ -1,0 +1,44 @@
+package admin;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import tools.EncryptDecrypt;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+import auth.UserService;
+
+
+public class deleteUser extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+     
+        String email = EncryptDecrypt.decodeBase64(request.getParameter("email"));
+
+        
+        if (email == null || email.trim().isEmpty()) {
+            response.sendRedirect("Admin/UserManagement/UserManagement.jsp?message=Invalid email");
+            return;
+        }
+
+        UserService userService = new UserService();
+        try {
+            boolean success = userService.deleteUser(email);
+            if (success) {
+                response.sendRedirect("Admin/UserManagement/UserManagement.jsp?message=User deleted successfully");
+            } else {
+                response.sendRedirect("Admin/UserManagement/UserManagement.jsp?message=User deletion failed");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            response.sendRedirect("Admin/UserManagement/UserManagement.jsp?message=Error occurred while deleting user");
+        }
+    }
+}

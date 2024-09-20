@@ -1,0 +1,13 @@
+1726372018309	Delete element
+1726373284124	Delete element
+1726389884365	Encapsulate field 'active_statue, ...'
+1726389889696	Encapsulate field 'access_level, ...'
+1726416413189	Encapsulate field 'userID, ...'
+1726416419068	Encapsulate field 'accessLevel, ...'
+1726416440850	Encapsulate field 'status, ...'
+1726489116737	Delete element
+1726570588618	Delete element
+1726573403917	Encapsulate field 'qty, ...'
+1726573408506	Encapsulate field 'price, ...'
+1726578807466	Rename resource 'Managesales.jsp'
+1726578940790	Move 'Manageproducts.jsp' to 'Products'

@@ -1,0 +1,56 @@
+package admin;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class CategoryDao {
+    private Connection connection;
+
+    public CategoryDao(Connection connection) {
+        this.connection = connection;
+    }
+
+    // Add a new category
+    public boolean addCategory(Category category) throws SQLException {
+        String query = "INSERT INTO categories (name) VALUES (?)";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, category.getName());
+            return pstmt.executeUpdate() > 0;
+        }
+    }
+
+    // Retrieve all categories
+    public List<Category> getAllCategories() throws SQLException {
+        String query = "SELECT * FROM categories";
+        List<Category> categories = new ArrayList<>();
+        try (PreparedStatement pstmt = connection.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                Category category = new Category(rs.getInt("id"), rs.getString("name"));
+                categories.add(category);
+            }
+        }
+        return categories;
+    }
+
+    // Delete category by ID
+    public boolean deleteCategory(int id) throws SQLException {
+        String query = "DELETE FROM categories WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, id);
+            return pstmt.executeUpdate() > 0;
+        }
+    }
+
+    // Update category by ID
+    public boolean updateCategory(Category category) throws SQLException {
+        String query = "UPDATE categories SET name = ? WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, category.getName());
+            pstmt.setInt(2, category.getId());
+            return pstmt.executeUpdate() > 0;
+        }
+    }
+}

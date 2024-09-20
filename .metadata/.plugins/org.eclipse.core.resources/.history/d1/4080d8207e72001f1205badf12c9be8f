@@ -1,0 +1,70 @@
+<%@ include file="headeradmin.jsp" %>
+<%@ page import="java.util.List" %>
+
+<title>Track-Stock - AdminDashboard</title>
+
+<div class="page">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Users panel -->
+            <a href="users.php" style="color:black;">
+                <div class="col-md-3">
+                    <div class="panel panel-box clearfix">
+                        <div class="panel-icon pull-left bg-secondary1">
+                            <i class="glyphicon glyphicon-user"></i>
+                        </div>
+                        <div class="panel-value pull-right">
+                            <h2 class="margin-top"><%= request.getAttribute("userCount") %></h2>
+                            <p class="text-muted">Users</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Categories panel -->
+            <a href="categorie.php" style="color:black;">
+                <div class="col-md-3">
+                    <div class="panel panel-box clearfix">
+                        <div class="panel-icon pull-left bg-red">
+                            <i class="glyphicon glyphicon-th-large"></i>
+                        </div>
+                        <div class="panel-value pull-right">
+                            <h2 class="margin-top"><%= request.getAttribute("categoryCount") %></h2>
+                            <p class="text-muted">Categories</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Products panel -->
+            <a href="product.php" style="color:black;">
+                <div class="col-md-3">
+                    <div class="panel panel-box clearfix">
+                        <div class="panel-icon pull-left bg-blue2">
+                            <i class="glyphicon glyphicon-shopping-cart"></i>
+                        </div>
+                        <div class="panel-value pull-right">
+                            <h2 class="margin-top"><%= request.getAttribute("productCount") %></h2>
+                            <p class="text-muted">Products</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Sales panel -->
+            <a href="sales.php" style="color:black;">
+                <div class="col-md-3">
+                    <div class="panel panel-box clearfix">
+                        <div class="panel-icon pull-left bg-green">
+                            <i class="glyphicon glyphicon-usd"></i>
+                        </div>
+                        <div class="panel-value pull-right">
+                            <h2 class="margin-top">Rs. <%= request.getAttribute("totalSales") %></h2>
+                            <p class="text-muted">Sales</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

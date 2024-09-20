@@ -1,0 +1,59 @@
+package auth;
+
+public class User {
+    private String username;
+    private String email;
+    private String password;
+    private String active_statue;
+    private String access_level;
+
+    public User(String username, String email, String password,String active_statue,String access_level) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.active_statue = active_statue;
+        this.access_level = access_level;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean validatePassword(String inputPassword) {
+        return this.password.equals(inputPassword);
+    }
+    public boolean validateEmail(String inputEmail) {
+        return this.email.equals(inputEmail);
+    }
+    public boolean validateAccess(String active_status) {
+    	return this.active_statue.equals(active_status);
+    }
+    public boolean validateAccesslevel(String active_level) {
+    	return this.access_level.equals(active_level);
+    }
+
+	public String getActive_statue() {
+		return active_statue;
+	}
+
+	public void setActive_statue(String active_statue) {
+		this.active_statue = active_statue;
+	}
+
+	public String getAccess_level() {
+		return access_level;
+	}
+
+	public void setAccess_level(String access_level) {
+		this.access_level = access_level;
+	}
+    
+}

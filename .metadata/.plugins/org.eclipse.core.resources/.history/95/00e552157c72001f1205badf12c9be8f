@@ -1,0 +1,36 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import auth.DbConn;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+public class Graph {
+    public static void getData(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException {
+        Connection conn = DbConn.getConnection();
+        PreparedStatement pstmtSales = conn.prepareStatement("SELECT YEAR(AddedDate) as year, SUM(TotalPrice) as total FROM sales GROUP BY YEAR(AddedDate)");
+        ResultSet rsSales = pstmtSales.executeQuery();
+        
+        PreparedStatement pstmtProducts = conn.prepareStatement("SELECT YEAR(TotalDate) as year, SUM(Price) as total FROM products GROUP BY YEAR(TotalDate)");
+        ResultSet rsProducts = pstmtProducts.executeQuery();
+        
+        // Processing results and setting attributes for JSP
+        List<Object[]> salesData = new ArrayList<>();
+        List<Object[]> productsData = new ArrayList<>();
+        
+        while (rsSales.next()) {
+            salesData.add(new Object[]{rsSales.getString("year"), rsSales.getDouble("total")});
+        }
+        
+        while (rsProducts.next()) {
+            productsData.add(new Object[]{rsProducts.getString("year"), rsProducts.getDouble("total")});
+        }
+        
+        request.setAttribute("salesData", salesData);
+        request.setAttribute("productsData", productsData);
+    }
+}

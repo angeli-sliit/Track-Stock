@@ -1,0 +1,45 @@
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import java.io.*;
+import java.util.Enumeration;
+
+public class session extends HttpServlet {
+
+    // A separate method to clear session, calling the external utility class
+    private static void clearSession(HttpSession session) {
+        tools.session.clearSession(session);  // Call the external session clear method
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Get the session and session attributes
+        HttpSession session = request.getSession();
+        Enumeration<String> attributeNames = session.getAttributeNames();
+
+        // Set response content type
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        // Check if session clearing is requested
+        String clear = request.getParameter("clearSession");
+        if (clear != null && clear.equals("true")) {
+            clearSession(session);  // Call the separate session clear method
+            out.println("<p>Session cleared successfully.</p>");
+            return;  // Exit to avoid displaying old session data after clearing
+        }
+
+        // Display session attributes
+        if (!attributeNames.hasMoreElements()) {
+            out.println("<p>No session data available.</p>");
+        } else {
+            while (attributeNames.hasMoreElements()) {
+                String attributeName = attributeNames.nextElement();
+                Object attributeValue = session.getAttribute(attributeName);
+                out.println("<p><strong>" + attributeName + ":</strong> " + attributeValue + "</p>");
+            }
+        }
+
+        // Optional: Add a link to trigger session clearing
+        out.println("<p><a href=\"?clearSession=true\">Clear Session</a></p>");
+    }
+}
