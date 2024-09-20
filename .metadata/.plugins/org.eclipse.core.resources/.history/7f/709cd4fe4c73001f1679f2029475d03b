@@ -1,0 +1,107 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="../Dashboard/headeradmin.jsp" %>
+<%@ page import="java.sql.Connection, java.sql.PreparedStatement, java.sql.ResultSet, java.sql.SQLException" %>
+<%@ page import="auth.DbConn" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Track-Stock - User Management</title>
+</head>
+<body>
+<div class="page">
+  <div class="container-fluid">
+<div class="row">
+   <div class="col-md-12">
+        </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+    <div class="panel-heading clearfix">
+      <strong>
+        <span class="glyphicon glyphicon-th"></span>
+        <span>Groups</span>
+     </strong>
+       <a href="add_group.php" class="btn btn-info pull-right btn-sm"> Add New Group</a>
+    </div>
+     <div class="panel-body">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th class="text-center" style="width: 50px;">#</th>
+            <th>Name</th>
+            <th class="text-center" style="width: 20%;">Access Level</th>
+            <th class="text-center" style="width: 15%;">Status</th>
+            <th class="text-center" style="width: 100px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+                  <tr>
+           <td class="text-center">1</td>
+           <td>Admin</td>
+           <td class="text-center">
+             1           </td>
+           <td class="text-center">
+                       <span class="label label-danger">Deactive</span>
+                     </td>
+           <td class="text-center">
+             <div class="btn-group">
+                <a href="edit_group.php?id=1" class="btn btn-xs btn-warning" data-toggle="tooltip" title="" data-original-title="Edit">
+                  <i class="glyphicon glyphicon-pencil"></i>
+               </a>
+                <a href="delete_group.php?id=1" class="btn btn-xs btn-danger" data-toggle="tooltip" title="" data-original-title="Remove">
+                  <i class="glyphicon glyphicon-remove"></i>
+                </a>
+                </div>
+           </td>
+          </tr>
+                  <tr>
+           <td class="text-center">2</td>
+           <td>Special</td>
+           <td class="text-center">
+             2           </td>
+           <td class="text-center">
+                       <span class="label label-success">Active</span>
+                     </td>
+           <td class="text-center">
+             <div class="btn-group">
+                <a href="edit_group.php?id=2" class="btn btn-xs btn-warning" data-toggle="tooltip" title="" data-original-title="Edit">
+                  <i class="glyphicon glyphicon-pencil"></i>
+               </a>
+                <a href="delete_group.php?id=2" class="btn btn-xs btn-danger" data-toggle="tooltip" title="" data-original-title="Remove">
+                  <i class="glyphicon glyphicon-remove"></i>
+                </a>
+                </div>
+           </td>
+          </tr>
+                  <tr>
+           <td class="text-center">3</td>
+           <td>User</td>
+           <td class="text-center">
+             3           </td>
+           <td class="text-center">
+                       <span class="label label-success">Active</span>
+                     </td>
+           <td class="text-center">
+             <div class="btn-group">
+                <a href="edit_group.php?id=3" class="btn btn-xs btn-warning" data-toggle="tooltip" title="" data-original-title="Edit">
+                  <i class="glyphicon glyphicon-pencil"></i>
+               </a>
+                <a href="delete_group.php?id=3" class="btn btn-xs btn-danger" data-toggle="tooltip" title="" data-original-title="Remove">
+                  <i class="glyphicon glyphicon-remove"></i>
+                </a>
+                </div>
+           </td>
+          </tr>
+               </tbody>
+     </table>
+     </div>
+    </div>
+  </div>
+</div>
+       </div>
+    </div>
+</body>
+</html>

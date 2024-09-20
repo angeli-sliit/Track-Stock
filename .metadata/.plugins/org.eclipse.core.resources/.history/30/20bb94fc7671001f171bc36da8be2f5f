@@ -1,0 +1,90 @@
+package auth;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@WebServlet("/ItemsHandler")
+public class Sales_ extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+	private Connection conn = null;
+	private PreparedStatement pstmt = null;
+
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	    String recId = request.getParameter("id");  // Get the sales ID from the request
+	    String successRedirect = "sales_list.jsp";
+	    String falseRedirect = "sales_list.jsp";
+
+	    if (recId == null || recId.isEmpty()) {
+	        // If sales ID is not provided, redirect to the failure page
+	        response.sendRedirect(falseRedirect + "?message=No+sales+ID+provided");
+	        return;
+	    }
+
+	    // Call the deleteSales method to attempt to delete the sales record
+	    deleteSales(recId, successRedirect, falseRedirect, response);
+	}
+
+	public void deleteSales(String recId, String successRedirect, String falseRedirect, HttpServletResponse response) {
+	    String sql = "DELETE FROM `sales` WHERE SalesId=?";  // SQL query to delete a sales record
+
+	    try {
+	        // Initialize the database connection
+	        try {
+				conn = DbConn.getConnection();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, recId);  // Set the sales ID in the query
+
+	        int rowsAffected = pstmt.executeUpdate();  // Execute the delete operation
+	        if (rowsAffected > 0) {
+	            // If successful, redirect to the success page
+	            response.sendRedirect(successRedirect + "?message=Sales+deleted+successfully");
+	        } else {
+	            // If no rows were affected, redirect to the failure page
+	            response.sendRedirect(falseRedirect + "?message=Sales+not+found");
+	        }
+	    } catch (SQLException | IOException e) {
+	        e.printStackTrace();
+	        try {
+	            // In case of an error, redirect to the failure page with an error message
+	            response.sendRedirect(falseRedirect + "?message=Error+deleting+sales");
+	        } catch (IOException ioException) {
+	            ioException.printStackTrace();
+	        }
+	    } finally {
+	        // Close the database resources
+	        closeResources();
+	    }
+	}
+
+	private void closeResources() {
+	    // Close PreparedStatement if not null
+	    if (pstmt != null) {
+	        try {
+	            pstmt.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    // Close Connection if not null
+	    if (conn != null) {
+	        try {
+	            conn.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+}

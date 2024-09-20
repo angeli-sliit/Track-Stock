@@ -1,0 +1,55 @@
+package admin;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import tools.session;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+import auth.User;
+import auth.UserService;
+
+/**
+ * Servlet implementation class adduserManual
+ */
+public class adduserManual extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+   
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		String username = request.getParameter("username");
+		String email = request.getParameter("email");
+		String password = request.getParameter("username");
+		String access_state = "Active";
+		String access_level = request.getParameter("role");
+		
+		
+		User user = new User(username, email, password,access_state,access_level);
+        UserService userService = new UserService();
+
+        try {
+            if (userService.getUserByEmailOrUsername(email) != null) {
+            	session.setAttribute("state","error");
+            	session.setAttribute("message","User Already Exsists");
+                
+            } else {
+                boolean success = userService.registerUser(user);
+                if (success) {
+                    response.sendRedirect("Admin/UserManagement/Userdetails.jsp"); 
+                } else {
+                    pr.println("Signup failed. Please try again.");
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            pr.println("Database connection problem: " + e.getMessage());
+            e.printStackTrace();
+        }
+	}
+
+}

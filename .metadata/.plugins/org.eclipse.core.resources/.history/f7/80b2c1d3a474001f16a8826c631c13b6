@@ -1,0 +1,100 @@
+package admin;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import auth.DbConn;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+public class CategoryServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    private CategoryDao categoryDao;
+
+    @Override
+    public void init() {
+        Connection connection = null;
+        try {
+            connection = DbConn.getConnection();
+            categoryDao = new CategoryDao(connection);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if (action == null) {
+            listCategories(request, response);  // Default action to list all categories
+        } else if ("edit".equals(action)) {
+            showEditForm(request, response);    // Show form to edit a category
+        } else if ("view".equals(action)) {
+            viewCategory(request, response);    // View category details
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if ("add".equals(action)) {
+            addCategory(request, response);
+        } else if ("delete".equals(action)) {
+            deleteCategory(request, response);
+        } else if ("update".equals(action)) {
+            updateCategory(request, response);
+        }
+    }
+
+    private void listCategories(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            List<Category> categoryList = categoryDao.getAllCategories();
+            request.setAttribute("categories", categoryList);
+            request.getRequestDispatcher("category-list.jsp").forward(request, response);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addCategory(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String name = request.getParameter("categoryName");
+
+        Category category = new Category();
+        category.setName(name);
+
+        try {
+            categoryDao.addCategory(category);
+            response.sendRedirect("category-list.jsp");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteCategory(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int id = Integer.parseInt(request.getParameter("categoryId"));
+        try {
+            categoryDao.deleteCategory(id);
+            response.sendRedirect("category-list.jsp");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateCategory(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int id = Integer.parseInt(request.getParameter("categoryId"));
+        String name = request.getParameter("categoryName");
+
+        Category category = new Category(id, name);
+
+        try {
+            categoryDao.updateCategory(category);
+            response.sendRedirect("category-list.jsp");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}

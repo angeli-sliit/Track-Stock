@@ -1,0 +1,119 @@
+package admin;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import auth.DbConn;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+public class ProductServlet extends HttpServlet {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private ProductDao productDao;
+
+    @Override
+    public void init() {
+    	
+        Connection connection = null;
+		try {
+			connection = DbConn.getConnection();
+			productDao = new ProductDao(connection);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+        
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	String cat_name = (String) request.getAttribute("categorie-name");
+        
+    }
+    @Override
+    
+    //action is taken from get method
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	HttpSession session = request.getSession();
+    	String action = request.getParameter("action");
+        if ("add".equals(action)) {
+            addProduct(request, response);
+        } else if ("delete".equals(action)) {
+            deleteProduct(request, response);
+        } else if ("update".equals(action)) {
+            updateProduct(request, response);
+        }
+    }
+    
+
+    private void addProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String name = request.getParameter("product-title");
+        String category = request.getParameter("product-categorie");
+        String qty = request.getParameter("product-quantity");
+        String price = request.getParameter("Price");
+
+        Product product = new Product(name,category,qty,price);
+
+        try {
+        	HttpSession session = request.getSession();
+            if( productDao.addProduct(product)) {
+             	 session.setAttribute("state", "success");
+             	 session.setAttribute("message","Product Added Succefully");
+             	 response.sendRedirect("Admin/products/Addproduct.jsp");
+             }
+             else {
+             	 session.setAttribute("state", "error");
+             	 session.setAttribute("message","Product Adding Failed !");
+             	 response.sendRedirect("Admin/products/Addproduct.jsp");
+             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+  
+    private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    	HttpSession session = request.getSession();
+    	int id = Integer.parseInt(request.getParameter("productId"));
+        try {
+            if(productDao.deleteProduct(id)) {
+            	 session.setAttribute("state", "success");
+            	 session.setAttribute("message","Category Deleted Succesfully ");
+            	 response.sendRedirect("Admin/Category/category.jsp");
+            }
+            else {
+            	 session.setAttribute("state", "error");
+            	 session.setAttribute("message","Category Delete Failed !");
+            	 response.sendRedirect("Admin/Category/category.jsp");
+            }
+           
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int id = Integer.parseInt(request.getParameter("productId"));
+        String name = request.getParameter("productName");
+        String category = request.getParameter("productCategory");
+
+        Product product = new Product(id, name, category);
+
+        try {
+            productDao.updateProduct(product);
+            response.sendRedirect("product-list.jsp");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}

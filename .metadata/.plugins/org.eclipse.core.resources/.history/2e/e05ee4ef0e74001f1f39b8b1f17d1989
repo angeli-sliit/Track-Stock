@@ -1,0 +1,134 @@
+<%@ include file="../Dashboard/headeradmin.jsp" %>
+<%@ page import="java.sql.Connection, java.sql.PreparedStatement, java.sql.ResultSet, java.sql.SQLException" %>
+<%@ page import="auth.DbConn" %>
+
+<title>Track-Stock - User Details</title>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<div class="page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading clearfix">
+            <strong>
+              <span class="glyphicon glyphicon-th"></span>
+              <span>Users</span>
+            </strong>
+            <a href="add_user.jsp" class="btn btn-info pull-right">Add New User</a>
+          </div>
+          <div class="panel-body">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th class="text-center" style="width: 50px;">#</th>
+                  <th>Email</th>
+                  <th class="text-center" style="width: 15%;">User Role</th>
+                  <th class="text-center" style="width: 10%;">Status</th>
+                  <th style="width: 20%;">Last Login</th>
+                  <th class="text-center" style="width: 100px;">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%
+    int count = 1;
+    String access = "";
+    String lastLogin = "";
+    String currentLoginUserEmail = (String) session.getAttribute("email");
+    
+    try (Connection conn = DbConn.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(
+             "SELECT User_ID, email, Access_level, Access_state, last_login FROM registered_user");
+         ResultSet rs = pstmt.executeQuery()) {
+
+        while (rs.next()) {
+            String userId = rs.getString("User_ID");
+            String email = rs.getString("email");
+            String accessLevel = rs.getString("Access_level");
+            String status = rs.getString("Access_state");
+            
+            if (currentLoginUserEmail != null && currentLoginUserEmail.equals(email)) {
+                lastLogin = "Current User";
+            } else {
+                lastLogin = rs.getString("last_login") != null ? rs.getString("last_login") : "No login history";
+            }
+            
+            String labelClass = status.equals("Active") ? "label-success" : "label-danger";
+            switch (accessLevel) {
+                case "1":
+                    access = "Admin";
+                    break;
+                case "2":
+                    access = "Special";
+                    break;
+                case "3":
+                    access = "User";
+                    break;
+                default:
+                    access = "Undefined";
+                    break;
+            }
+%>
+            <tr>
+                <td class="text-center"><%= count %></td>
+                <td><%= email %></td>
+                <td class="text-center"><%= access %></td>
+                <td class="text-center"><span class="label <%= labelClass %>"><%= status %></span></td>
+                <td><%= lastLogin %></td>
+                <td class="text-center">
+                    <div class="btn-group">
+                        <a href="edit_user.jsp?id=<%= userId %>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a href="delete_user.jsp?id=<%= userId %>" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>
+                    </div>
+                </td>
+            </tr>
+<%
+            count++;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+%>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tooltip and Modal Script -->
+<script src="path/to/jquery.js"></script>
+<script src="path/to/bootstrap.js"></script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+ <!-- This part clear out the message after the set time -->
+  <script>
+  	const time_duration = 20000;
+  
+    var alertMessage = document.getElementById('alert-message');
+    if (alertMessage) {
+       
+        setTimeout(function() {
+          
+            alertMessage.style.display = 'none';
+        }, time_duration);
+    } 
+</script>
+  
+</body>
+
+</html>
+

@@ -1,0 +1,86 @@
+package auth;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@WebServlet("/ItemsHandler")
+public class Sales extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+	private Connection conn = null;
+	private PreparedStatement pstmt = null;
+
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	    String recId = request.getParameter("id"); 
+	    String successRedirect = "sales_list.jsp";
+	    String falseRedirect = "sales_list.jsp";
+
+	    if (recId == null || recId.isEmpty()) {
+	        response.sendRedirect(falseRedirect + "?message=No+sales+ID+provided");
+	        return;
+	    }
+	    deleteSales(recId, successRedirect, falseRedirect, response);
+	}
+
+	//Implementation of delete_sales_method
+	public void deleteSales(String recId, String successRedirect, String falseRedirect, HttpServletResponse response) {
+	    String sql = "DELETE FROM `sales` WHERE SalesId=?"; 
+
+	    try {
+	        try {
+				conn = DbConn.getConnection();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, recId);  
+
+	        int rowsAffected = pstmt.executeUpdate();  
+	        if (rowsAffected > 0) {
+	            response.sendRedirect(successRedirect + "?message=Sales+deleted+successfully");
+	        } else {
+	            response.sendRedirect(falseRedirect + "?message=Sales+not+found");
+	        }
+	    } catch (SQLException | IOException e) {
+	        e.printStackTrace();
+	        try { 
+	        	
+	            response.sendRedirect(falseRedirect + "?message=Error+deleting+sales");
+	            
+	        } catch (IOException ioException) {
+	            ioException.printStackTrace();
+	        }
+	    } finally {
+	      
+	        closeResources();
+	    }
+	}
+
+	private void closeResources() {
+	    
+	    if (pstmt != null) {
+	        try {
+	            pstmt.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	   
+	    if (conn != null) {
+	        try {
+	            conn.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+}

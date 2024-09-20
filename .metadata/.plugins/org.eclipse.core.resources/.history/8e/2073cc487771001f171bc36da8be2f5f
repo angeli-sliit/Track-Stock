@@ -1,0 +1,44 @@
+package auth;
+
+import java.io.IOException;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+
+public class SalesDelete extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	
+	public SalesDelete() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		String id = request.getParameter("id");
+
+		if (id == null || id.isEmpty()) {
+			// If no sales ID is provided, redirect with a message
+			response.sendRedirect("Saleslist/sa leslist.jsp?message=No+sales+ID+provided");
+			return;
+		}
+
+		// Create an instance of ItemsHandler with the sales ID and redirect paths
+		Sales itemHandler = new Sales();
+
+		// Pass the response to the deleteSales method to handle redirection
+		itemHandler.deleteSales(id, "Saleslist/saleslist.jsp", "Saleslist/saleslist.jsp",response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// For POST requests, call doGet to handle deletion logic
+		doGet(request, response);
+	}
+}

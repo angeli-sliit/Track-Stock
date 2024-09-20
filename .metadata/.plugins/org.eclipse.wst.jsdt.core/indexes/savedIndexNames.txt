@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+C:\Track-Stock-master\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3864214379.index
+2571547024.index
+2086148985.index
+2672837226.index
+649656288.index
+2193001924.index
+3394364539.index

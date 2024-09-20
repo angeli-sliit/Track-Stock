@@ -1,0 +1,176 @@
+package auth;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+@WebServlet("/ItemsHandler")
+public class Sales extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+	private Connection conn = null;
+	private PreparedStatement pstmt = null;
+
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	    String recId = request.getParameter("id"); 
+	    String successRedirect = "sales_list.jsp";
+	    String falseRedirect = "sales_list.jsp";
+
+	    if (recId == null || recId.isEmpty()) {
+	        response.sendRedirect(falseRedirect + "?message=No+sales+ID+provided");
+	        return;
+	    }
+	    deleteSales(recId, successRedirect, falseRedirect, response);
+	}
+
+	//Implementation of delete_sales_method
+	public void deleteSales(String recId, String successRedirect, String falseRedirect, HttpServletResponse response) {
+	    String sql = "DELETE FROM `sales` WHERE SalesId=?"; 
+
+	    try {
+	        try {
+				conn = DbConn.getConnection();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, recId);  
+
+	        int rowsAffected = pstmt.executeUpdate();  
+	        if (rowsAffected > 0) {
+	            response.sendRedirect(successRedirect + "?message=Sales+deleted+successfully");
+	        } else {
+	            response.sendRedirect(falseRedirect + "?message=Sales+not+found");
+	        }
+	    } catch (SQLException | IOException e) {
+	        e.printStackTrace();
+	        try { 
+	        	
+	            response.sendRedirect(falseRedirect + "?message=Error+deleting+sales");
+	            
+	        } catch (IOException ioException) {
+	            ioException.printStackTrace();
+	        }
+	    } finally {
+	      
+	        closeResources();
+	    }
+	}
+	
+	//update_sales method Implementation
+	public void updatesales() {
+		
+	}
+	
+
+	// Method to add a new sale
+	public void addsale(HttpServletRequest request, HttpServletResponse response) {
+	    HttpSession session = request.getSession();
+	    String prodId = request.getParameter("prodId");
+	    String quantityStr = request.getParameter("quantity");
+	    String priceStr = request.getParameter("price");
+	    String saleDate = request.getParameter("sale_date");
+	    String Email = (String) session.getAttribute("email");
+
+	    if (prodId == null || quantityStr == null || priceStr == null || saleDate == null) {
+	        System.out.println("Error: Missing required parameters.");
+	        return;
+	    }
+
+	    int quantity = 0;
+	    double price = 0;
+	    try {
+	        quantity = Integer.parseInt(quantityStr);
+	        price = Double.parseDouble(priceStr);
+	    } catch (NumberFormatException e) {
+	        System.out.println("Error: Invalid number format for quantity or price.");
+	        return;
+	    }
+
+	    double totalPrice = quantity * price;
+
+	    String insertSaleQuery = "INSERT INTO `sales`(`productId`, `AddedDate`, `Quantity`, `TotalPrice`,`UserEmail`) VALUES (?,?,?,?,?)";
+	    String updateProductQuery = "UPDATE `products` SET `Quantity` = `Quantity` - ? WHERE `prodId` = ?";
+
+	    try (Connection con = DbConn.getConnection();
+	         PreparedStatement insertSalePs = con.prepareStatement(insertSaleQuery);
+	         PreparedStatement updateProductPs = con.prepareStatement(updateProductQuery)) {
+
+	        // Insert sale
+	        insertSalePs.setString(1, prodId);
+	        insertSalePs.setString(2, saleDate);
+	        insertSalePs.setInt(3, quantity);
+	        insertSalePs.setDouble(4, totalPrice);
+	        insertSalePs.setString(5, Email);
+	        int rowsAffected = insertSalePs.executeUpdate();
+
+	        if (rowsAffected > 0) {
+	            // Update product quantity
+	            updateProductPs.setInt(1, quantity);
+	            updateProductPs.setString(2, prodId);
+	            int productRowsAffected = updateProductPs.executeUpdate();
+
+	            if (productRowsAffected > 0) {
+	                response.sendRedirect("newsale/newsale.jsp?message=addsalesuccess");
+	            } else {
+	                response.getWriter().println("Error: Failed to update product quantity.");
+	            }
+	        } else {
+	            response.getWriter().println("Error: No rows affected.");
+	        }
+	    } catch (SQLException | IOException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	        try {
+	            response.getWriter().println("Error: " + e.getMessage());
+	        } catch (IOException ioException) {
+	            ioException.printStackTrace();
+	        }
+	    }
+	// Close resources method
+	private void closeResources() {
+	    if (pstmt != null) {
+	        try {
+	            pstmt.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    if (conn != null) {
+	        try {
+	            conn.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+
+	private void closeResources() {
+	    
+	    if (pstmt != null) {
+	        try {
+	            pstmt.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	   
+	    if (conn != null) {
+	        try {
+	            conn.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+}
