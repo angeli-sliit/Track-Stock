@@ -3,6 +3,12 @@
 <%   HttpSession se1 = request.getSession();
 	 String username = (String) se1.getAttribute("username");
 %>
+  
+<% HttpSession Se1 = request.getSession(); %>
+
+
+
+
 
 <html>
 <head>
@@ -367,7 +373,7 @@ object-fit:cover;
                  </a>
              </li>
              <li class="last">
-                 <a href="../../logout">
+                 <a href="${pageContext.request.contextPath}/logout">
                      <i class="glyphicon glyphicon-off"></i>
                      Logout
                  </a>
@@ -393,12 +399,12 @@ object-fit:cover;
       <span>User Management</span>
     </a>
     <ul class="nav submenu" style="display: none;">
-      <li><a href="group.php">Manage Groups</a> </li>
-      <li><a href="users.php">Manage Users</a> </li>
+      <li><a href="${pageContext.request.contextPath}/Admin/UserManagement/UserManagement.jsp">Manage User Access</a> </li>
+      <li><a href="${pageContext.request.contextPath}/Admin/UserManagement/Userdetails.jsp">User Permission</a> </li>
    </ul>
   </li>
   <li>
-    <a href="categorie.php">
+    <a href="${pageContext.request.contextPath}/Admin/Category/category.jsp">
       <i class="glyphicon glyphicon-indent-left"></i>
       <span>Categories</span>
     </a>
@@ -409,8 +415,8 @@ object-fit:cover;
       <span>Products</span>
     </a>
     <ul class="nav submenu" style="display: none;">
-       <li><a href="product.php">Manage Products</a> </li>
-       <li><a href="add_product.php">Add Products</a> </li>
+       <li><a href="${pageContext.request.contextPath}/Admin/Products/Manageproducts.jsp">Manage Products</a> </li>
+       <li><a href="${pageContext.request.contextPath}/Admin/Products/Addproduct.jsp">Add Products</a> </li>
    </ul>
   </li>
   <li>
@@ -441,13 +447,10 @@ object-fit:cover;
       </ul>
   </li>
 </ul>
+</div>
 
-      
-   </div>
 
-    
-    </body>
-    
+
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
@@ -564,6 +567,6 @@ object-fit:cover;
 	setInterval(updateDateTime, 1000);
 	updateDateTime();
   </script>
-  
+ 
   
   </html>    

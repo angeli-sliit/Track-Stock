@@ -21,8 +21,10 @@ public class SignUpHandler extends HttpServlet {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String access_state = "Active";
+        String access_level = "3";
 
-        User user = new User(username, email, password);
+        User user = new User(username, email, password,access_state,access_level);
         UserService userService = new UserService();
 
         try {

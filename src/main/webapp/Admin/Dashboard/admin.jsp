@@ -18,6 +18,39 @@ height:50%  !important;
  
 
 <div class="page">
+<div class="row">
+   <div class="col-md-12">
+<% 
+// Retrieve the session attributes
+
+
+String msgs = (String) session.getAttribute("message");
+String messageType = (String) session.getAttribute("state");
+String displayMessage = "";
+
+System.out.println(msgs);
+System.out.println(messageType);
+
+
+if (msgs != null && !msgs.isEmpty()) {
+    if ("success".equalsIgnoreCase(messageType)) {
+        displayMessage = "<div id='alert-message' class='alert alert-success'><a href='#' class='close' data-dismiss='alert'>×</a>" + msgs + "</div>";
+    } else if ("error".equalsIgnoreCase(messageType)) {
+        displayMessage = "<div id='alert-message' class='alert alert-danger'><a href='#' class='close' data-dismiss='alert'>×</a>" + msgs + "</div>";
+    } else {
+        displayMessage = "<div id='alert-message' class='alert alert-info'><a href='#' class='close' data-dismiss='alert'>×</a>" + msgs + "</div>";
+    }
+
+    // Clear the session attributes after displaying the message
+    session.removeAttribute("message");
+    session.removeAttribute("state");
+}
+%>
+
+<%= displayMessage %>
+
+</div>
+</div>
     <div class="container-fluid">
 
         <!-- Welcome Alert -->
@@ -54,23 +87,8 @@ height:50%  !important;
                             <i class="glyphicon glyphicon-th-large"></i>
                         </div>
                         <div class="panel-value pull-right">
-                         <% 
-    							int rowCount_category = 0; 
-
-  								  try (Connection conn = DbConn.getConnection();
-        								PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM product_category");
-         								ResultSet rs = pstmt.executeQuery()) {
-
-        						 		while (rs.next()) {
-            							rowCount_category++;  
-        							 }
-
-    							 } 
-  								 catch (SQLException | ClassNotFoundException e) {
-        								e.printStackTrace();
-    							 }
-				%>
-                            <h2 class="margin-top"> <%= rowCount_category %> </h2>
+                         
+                            <h2 class="margin-top"> <%= request.getAttribute("categoryCount") %> </h2>
                             <p class="text-muted">Categories</p>
                         </div>
                     </div>
@@ -85,23 +103,8 @@ height:50%  !important;
                             <i class="glyphicon glyphicon-shopping-cart"></i>
                         </div>
                         <div class="panel-value pull-right">
-                         <% 
-    							int rowCount_products= 0; 
-
-  								  try (Connection conn = DbConn.getConnection();
-        								PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM products");
-         								ResultSet rs = pstmt.executeQuery()) {
-
-        						 		while (rs.next()) {
-            							rowCount_products++;  
-        							 }
-
-    							 } 
-  								 catch (SQLException | ClassNotFoundException e) {
-        								e.printStackTrace();
-    							 }
-				%>
-                            <h2 class="margin-top"> <%= rowCount_products %></h2>
+                        
+                            <h2 class="margin-top"> <%= request.getAttribute("productCount") %></h2>
                             <p class="text-muted">Products</p>
                         </div>
                     </div>
@@ -116,23 +119,8 @@ height:50%  !important;
                             <i class="glyphicon glyphicon-usd"></i>
                         </div>
                         <div class="panel-value pull-right">
-                         <% 
-    							double Sum_sales= 0; 
-
-  								  try (Connection conn = DbConn.getConnection();
-        								PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM sales");
-         								ResultSet rs = pstmt.executeQuery()) {
-
-        						 		while (rs.next()) {
-        						 			Sum_sales += rs.getDouble("TotalPrice");    
-        							 }
-
-    							 } 
-  								 catch (SQLException | ClassNotFoundException e) {
-        								e.printStackTrace();
-    							 }
-				%>
-                            <h2 class="margin-top"> Rs.<%= Sum_sales %></h2>
+                         
+                            <h2 class="margin-top"> Rs.<%= request.getAttribute("totalSales") %></h2>
                             <p class="text-muted">Sales</p>
                         </div>
                     </div>
@@ -299,3 +287,19 @@ height:50%  !important;
  
         </div>
 </div>
+ 
+   <!-- This part clear out the message after the set time -->
+  <script>
+  	const time_duration = 20000;
+  
+    var alertMessage = document.getElementById('alert-message');
+    if (alertMessage) {
+       
+        setTimeout(function() {
+          
+            alertMessage.style.display = 'none';
+        }, time_duration);
+    } 
+</script>
+  
+  

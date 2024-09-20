@@ -1,17 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- error handling part-->
-<?php
-session_start();
-
-if (isset($_SESSION['login_error'])) {
-    $loginFail = $_SESSION['login_error'];
-    unset($_SESSION['login_error']);
-} else {
-    $loginFail = "";
-}
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">

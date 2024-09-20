@@ -27,15 +27,28 @@ public class SigninHandler extends HttpServlet {
 
         try {
             User user = userService.getUserByEmailOrUsername(emailOrUsername);
-            if (user != null && user.validatePassword(inputPassword)) {
+            if (user != null && user.validatePassword(inputPassword)&& user.validateAccess()) {
+            	userService.updateLastLogin(user.getEmail());
                 session.setAttribute("login_state", true);
                 session.setAttribute("email", user.getEmail());
                 session.setAttribute("username", user.getUsername());
+                session.setAttribute("Access_level", user.getAccess_level());
+                session.setAttribute("state", "success");
+                session.setAttribute("message", "Welcome to Inventory Management System");
 
                 // Check if the user is an admin
-                if (user.getEmail().endsWith("@trackstock.com") && userService.isAdmin(user.getEmail())) {
+                if (user.getEmail().endsWith("@trackstock.com") && userService.isAdmin(user.getEmail()) && user.validateAccess()) {
+                	System.out.println("hello");
+                	userService.updateLastLogin(user.getEmail());
+                	session.setAttribute("login_state", true);
+                    session.setAttribute("email", user.getEmail());
+                    session.setAttribute("username", user.getUsername());
+                    session.setAttribute("Access_level", user.getAccess_level());
+                    session.setAttribute("state", "success");
+                    session.setAttribute("message", "Welcome to Inventory Management System");
                     response.sendRedirect("DashboardDataFetch");
-                } else {
+                    
+                    } else {
                     response.sendRedirect("Home/Home.jsp");
                 }
             } else {
